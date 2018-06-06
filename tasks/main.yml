@@ -1,2 +1,38 @@
 ---
-# tasks file for ansible-role-monitorix
+
+- name: add apt signing keys
+  apt_key:
+    url: https://apt.izzysoft.de/izzysoft.asc
+
+- name: add apt repositories
+  apt_repository:
+    repo: deb https://apt.izzysoft.de/ubuntu generic universe
+
+- name: apt-get update
+  apt:
+    update_cache: yes
+  when: "ansible_os_family == 'Debian'"
+  changed_when: false
+
+- name: install packages
+  package:
+    name: monitorix
+
+- name: configure monitorix
+  template:
+    src: monitorix.conf.j2
+    dest: /etc/monitorix/monitorix.conf
+  notify: restart monitorix
+
+- name: creating directory for alerting scripts
+  file:
+    path: "{{ monitorix_alerting_scripts_base_path }}"
+    state: directory
+
+- name: deploy alerting scipts
+  template:
+    src: "{{ item.script }}.j2"
+    dest: "{{ monitorix_alerting_scripts_base_path }}{{ item.script }}"
+    mode: 0744
+  with_items:
+    - "{{ monitorix_alerting_fs }}"

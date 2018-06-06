@@ -1,2 +1,8 @@
 ---
-# defaults file for ansible-role-monitorix
+monitorix_alerting_scripts_base_path: /etc/monitorix/alerting-scripts/
+
+monitorix_alerting_fs:
+  - list_item: /
+    time_interval: 5
+    threshold: 15
+    script: monitorix-logging-disk.sh
