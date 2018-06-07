@@ -3,6 +3,6 @@ monitorix_alerting_scripts_base_path: /etc/monitorix/alerting-scripts/
 
 monitorix_alerting_fs:
   - list_item: /
-    time_interval: 5
-    threshold: 15
+    time_interval: 3600
+    threshold: 90
     script: monitorix-logging-disk.sh
