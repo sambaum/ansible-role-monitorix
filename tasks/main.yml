@@ -1,18 +1,6 @@
 ---
 
-- name: add apt signing keys
-  apt_key:
-    url: https://apt.izzysoft.de/izzysoft.asc
-
-- name: add apt repositories
-  apt_repository:
-    repo: deb https://apt.izzysoft.de/ubuntu generic universe
-
-- name: apt-get update
-  apt:
-    update_cache: yes
-  when: "ansible_os_family == 'Debian'"
-  changed_when: false
+- include_tasks: "{{ ansible_os_family }}.yml"
 
 - name: install packages
   package:
@@ -36,3 +24,4 @@
     mode: 0744
   with_items:
     - "{{ monitorix_alerting_fs }}"
+
