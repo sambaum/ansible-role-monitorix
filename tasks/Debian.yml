@@ -1,3 +1,7 @@
+- name: install apt-transport-https
+  package:
+    name: apt-transport-https
+
 - name: add apt signing keys
   apt_key:
     url: https://apt.izzysoft.de/izzysoft.asc
