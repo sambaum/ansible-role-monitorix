@@ -289,7 +289,13 @@ secure_log_date_format = %b %e
 # -----------------------------------------------------------------------------
 <fs>
 	<list>
-		0 = /, swap, /boot
+		0 = {% for item in monitorix_alerting_fs %}
+{{ item.list_item }}
+{%- if not loop.last %}, {% endif %}
+{% if loop.last %}
+
+{% endif %}
+{% endfor %}
 	</list>
 	<desc>
 	</desc>
@@ -299,7 +305,9 @@ secure_log_date_format = %b %e
 	limit = 100, 1000, 100, 1000
 	<alerts>
 {% for item in monitorix_alerting_fs %}
-		{{ item.list_item }} = {{ item.time_interval }}, {{ item.threshold }}, {{monitorix_alerting_scripts_base_path}}{{ item.script }}
+{% if item.alert %}
+		{{ item.list_item }} = {{ item.time_interval }}, {{ item.threshold }}, {{ monitorix_alerting_scripts_base_path }}{{ item.script }}_{{ item.list_item_alt_name }}
+{% endif %}
 {% endfor %}
     </alerts>
 </fs>

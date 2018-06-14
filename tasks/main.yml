@@ -20,8 +20,8 @@
 - name: deploy alerting scipts
   template:
     src: "{{ item.script }}.j2"
-    dest: "{{ monitorix_alerting_scripts_base_path }}{{ item.script }}"
+    dest: "{{ monitorix_alerting_scripts_base_path }}{{ item.script }}_{{ item.list_item_alt_name }}"
     mode: 0744
   with_items:
     - "{{ monitorix_alerting_fs }}"
-
+  when: item.alert
