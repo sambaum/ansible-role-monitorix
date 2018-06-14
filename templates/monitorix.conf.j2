@@ -28,7 +28,7 @@ base_cgi = /monitorix-cgi
 <httpd_builtin>
 	enabled = y
 	host =
-	port = 8080
+	port = {{ monitorix_tcp_port }}
 	user = nobody
 	group = nobody
 	log_file = /var/log/monitorix-httpd
