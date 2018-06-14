@@ -1,7 +1,9 @@
 ---
 monitorix_alerting_scripts_base_path: /etc/monitorix/alerting-scripts/
 
-monitorix_alerting_fs:
+monitorix_alerting_fs: []
+
+monitorix_alerting_fs_default:
   - list_item: /
     list_item_alt_name: root-partition
     time_interval: 43200 # 12h
@@ -18,6 +20,7 @@ monitorix_alerting_fs:
     script: monitorix-logging-disk.sh
     alert: yes
 
+monitorix_alerting_fs_final: "{{ monitorix_alerting_fs_default }} + {{ monitorix_alerting_fs }}"
 
 monitorix_hosts_deny: all
 monitorix_hosts_allow: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16

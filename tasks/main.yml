@@ -23,5 +23,5 @@
     dest: "{{ monitorix_alerting_scripts_base_path }}{{ item.script }}_{{ item.list_item_alt_name }}"
     mode: 0744
   with_items:
-    - "{{ monitorix_alerting_fs }}"
+    - "{{ monitorix_alerting_fs_final }}"
   when: item.alert
