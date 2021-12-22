@@ -12,6 +12,13 @@
     dest: /etc/monitorix/monitorix.conf
   notify: restart monitorix
 
+- name: configure monitorix
+  template:
+    src: 00-debian.conf.j2
+    dest: /etc/monitorix/conf.d/00-debian.conf
+  notify: restart monitorix
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
 - name: creating directory for alerting scripts
   file:
     path: "{{ monitorix_alerting_scripts_base_path }}"

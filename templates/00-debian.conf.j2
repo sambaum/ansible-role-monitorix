@@ -1,0 +1,47 @@
+# This is the Debian/Ubuntu configuration file to be added in the directory
+# /etc/monitorix/conf.d. It will override some default options without having
+# to change any line of the main configuration file.
+
+mail_log    = /var/log/mail.log
+
+<httpd_builtin>
+        group = nogroup
+</httpd_builtin>
+
+<fs>
+        <list>
+                0 = {% for item in monitorix_alerting_fs_final %}
+{{ item.list_item }}
+{%- if not loop.last %}, {% endif %}
+{% if loop.last %}
+
+{% endif %}
+{% endfor %}
+        </list>
+        <desc>
+        </desc>
+        <devmap>
+        </devmap>
+        rigid = 2, 0, 2, 0
+        limit = 100, 1000, 100, 1000
+        <alerts>
+{% for item in monitorix_alerting_fs_final %}
+{% if item.alert %}
+                {{ item.list_item }} = {{ item.time_interval }}, {{ item.threshold }}, {{ monitorix_alerting_scripts_base_path }}{{ item.script }}_{{ item.list_item_alt_name }}
+{% endif %}
+{% endfor %}
+    </alerts>
+</fs>
+
+<mysql>
+        conn_type = socket
+        list = /run/mysqld/mysqld.sock
+        <desc>
+                /run/mysqld/mysqld.sock = 3306, user, secret
+        </desc>
+</mysql>
+
+<apcupsd>
+        cmd = /sbin/apcaccess
+</apcupsd>
+
