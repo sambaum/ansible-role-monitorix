@@ -25,3 +25,11 @@ monitorix_alerting_fs_final: "{{ monitorix_alerting_fs_default }} + {{ monitorix
 monitorix_hosts_deny: all
 monitorix_hosts_allow: 127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
 monitorix_tcp_port: 8081
+
+monitorix_net_list: ens160 # ens160, ens192
+monitorix_net_desc:
+  - interface: ens160
+    description: LAN
+    min: 0
+    max: 10000000
+monitorix_net_gateway: ens160

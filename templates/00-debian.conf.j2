@@ -45,3 +45,13 @@ mail_log    = /var/log/mail.log
         cmd = /sbin/apcaccess
 </apcupsd>
 
+<net>
+        max = 10
+        list = {{ monitorix_net_list }}
+        <desc>
+{% for item in monitorix_net_desc %}
+                {{ item.interface }} = {{ item.description }}, {{ item.min }}, {{ item.max }}
+{% endfor %}
+        </desc>
+        gateway = {{ monitorix_net_gateway }}
+</net>
