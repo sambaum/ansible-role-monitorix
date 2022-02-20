@@ -33,3 +33,6 @@ monitorix_net_desc:
     min: 0
     max: 10000000
 monitorix_net_gateway: ens160
+monitorix_du_folder_lists:
+  - desc: "/home"
+    dirmap: "/home = Home folder"

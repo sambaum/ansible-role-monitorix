@@ -45,6 +45,8 @@ mail_log    = /var/log/mail.log
         cmd = /sbin/apcaccess
 </apcupsd>
 
+# NET graph
+# -----------------------------------------------------------------------------
 <net>
         max = 10
         list = {{ monitorix_net_list }}
@@ -55,3 +57,24 @@ mail_log    = /var/log/mail.log
         </desc>
         gateway = {{ monitorix_net_gateway }}
 </net>
+
+
+# DU graph
+# -----------------------------------------------------------------------------
+<du>
+        list = System, Users
+        <desc>
+{% for item in monitorix_du_folder_lists %}
+                {{ loop.index - 1}} = {{ item.desc }}
+{% endfor %}
+
+        </desc>
+        <dirmap>
+{% for item in monitorix_du_folder_lists %}
+                {{ item.dirmap }}
+{% endfor %}
+        </dirmap>
+        graphs_per_row = 2
+        rigid = 0
+        limit = 100
+</du>
