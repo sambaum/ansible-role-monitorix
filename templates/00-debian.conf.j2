@@ -62,7 +62,7 @@ mail_log    = /var/log/mail.log
 # DU graph
 # -----------------------------------------------------------------------------
 <du>
-        list = System, Users
+        list = {{ monitorix_du_list }}
         <desc>
 {% for item in monitorix_du_folder_lists %}
                 {{ loop.index - 1}} = {{ item.desc }}
