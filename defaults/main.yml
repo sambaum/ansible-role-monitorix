@@ -1,4 +1,104 @@
 ---
+
+monitorix_hosts_deny: all
+monitorix_hosts_allow: 127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+monitorix_tcp_port: 8081
+
+monitorix_graph_enable:
+  - graph: proc
+    enable: n
+  - graph: serv
+    enable: n
+  - graph: port
+    enable: n
+  - graph: lmsens
+    enable: n
+  - graph: du
+    enable: n
+  - graph: zfs
+    enable: n
+  - graph: nvme
+    enable: n
+  - graph: nut
+    enable: n
+
+monitorix_net_list: eth0 # ens160, ens192
+monitorix_net_desc:
+  - interface: eth0
+    description: FastEthernet LAN, 0, 10000000
+    min: 0
+    max: 10000000
+monitorix_net_gateway: eth0
+
+monitorix_du_list: System, Users
+monitorix_du_folder_lists:
+  - desc: "/var/spool/mail, /var/spool/mqueue, /etc, /var/ftp, /tmp"
+    dirmap: "/var/spool/mail = Mail boxes"
+  - desc: "/home/ace, /home/gene, /home/paul, /home/peter"
+    dirmap: "/var/spool/mqueue = Mail queue"
+
+monitorix_zfs_list: pool1, pool2
+
+monitorix_fs_list:
+  - index: 0
+    value: /, /boot/efi
+
+monitorix_lmsens_list:
+  - list_item: core0
+    list_value: Core 0
+    list_desc: Core 0
+  - list_item: core1
+    list_value: Core 1
+    list_desc: Core 1
+  - list_item: mb0
+    list_value: M/B Temp
+    list_desc: M/B Temp
+  - list_item: cpu0
+    list_value: CPU Temp
+    list_desc: CPU Temp
+  - list_item: fan0
+    list_value: fan1
+    list_desc: Fan 1
+  - list_item: fan1
+    list_value: fan2
+    list_desc: Fan 2
+  - list_item: fan2
+    list_value: fan3
+    list_desc: Fan 3
+  - list_item: volt0
+    list_value: VCore 1
+    list_desc: VCore 1
+  - list_item: volt1
+    list_value: VCore 2
+    list_desc: VCore 2
+  - list_item: volt2
+    list_value: \+3.3V
+    list_desc: +3.3V
+  - list_item: volt3
+    list_value: \+5V
+    list_desc: +5V
+  - list_item: volt4
+    list_value: \+12V
+    list_desc: +12V
+  - list_item: volt5
+    list_value: \-12V
+    list_desc: -12V
+  - list_item: volt6
+    list_value: \-5V
+    list_desc: -5V
+  - list_item: volt7
+    list_value: Battery
+    list_desc: Battery
+  - list_item: gpu0
+    list_value: nvidia
+    list_desc: Nvidia
+
+monitorix_nut_list: ups@localhost
+
+monitorix_nvme_list: /dev/nvme0
+
+### Alerting
+
 monitorix_alerting_scripts_base_path: /etc/monitorix/alerting-scripts/
 
 monitorix_alerting_fs: []
@@ -21,19 +121,3 @@ monitorix_alerting_fs_default:
     alert: yes
 
 monitorix_alerting_fs_final: "{{ monitorix_alerting_fs_default | union(monitorix_alerting_fs) | unique }}"
-
-monitorix_hosts_deny: all
-monitorix_hosts_allow: 127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-monitorix_tcp_port: 8081
-
-monitorix_net_list: ens160 # ens160, ens192
-monitorix_net_desc:
-  - interface: ens160
-    description: LAN
-    min: 0
-    max: 10000000
-monitorix_net_gateway: ens160
-monitorix_du_list: Home
-monitorix_du_folder_lists:
-  - desc: "/home"
-    dirmap: "/home = Home folder"

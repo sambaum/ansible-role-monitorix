@@ -1,0 +1,150 @@
+# This is the Debian/Ubuntu configuration file to be added in the directory
+# /etc/monitorix/conf.d. It will override some default options without having
+# to change any line of the main configuration file.
+
+<httpd_builtin>
+        port = {{ monitorix_tcp_port }}
+        hosts_deny = {{ monitorix_hosts_deny }}
+        hosts_allow = {{ monitorix_hosts_allow }}
+        group = nogroup
+</httpd_builtin>
+
+
+# Graphs (de)activation
+# -----------------------------------------------------------------------------
+<graph_enable>
+{% for item in monitorix_graph_enable %}
+                {{ item.graph}} = {{ item.enable }}
+{% endfor %}
+</graph_enable>
+
+
+# NET graph
+# -----------------------------------------------------------------------------
+<fs>
+        <list>
+                0 = {% for item in monitorix_alerting_fs_final %}
+{{ item.list_item }}
+{%- if not loop.last %}, {% endif %}
+{% if loop.last %}
+
+{% endif %}
+{% endfor %}
+        </list>
+        <desc>
+        </desc>
+        <devmap>
+        </devmap>
+        rigid = 2, 0, 2, 0
+        limit = 100, 1000, 100, 1000
+        <alerts>
+{% for item in monitorix_alerting_fs_final %}
+{% if item.alert %}
+                {{ item.list_item }} = {{ item.time_interval }}, {{ item.threshold }}, {{ monitorix_alerting_scripts_base_path }}{{ item.script }}_{{ item.list_item_alt_name }}
+{% endif %}
+{% endfor %}
+    </alerts>
+</fs>
+
+
+# NET graph
+# -----------------------------------------------------------------------------
+<net>
+        max = 10
+        list = {{ monitorix_net_list }}
+        <desc>
+{% for item in monitorix_net_desc %}
+                {{ item.interface }} = {{ item.description }}, {{ item.min }}, {{ item.max }}
+{% endfor %}
+        </desc>
+        gateway = {{ monitorix_net_gateway }}
+</net>
+
+
+# DU graph
+# -----------------------------------------------------------------------------
+<du>
+        list = {{ monitorix_du_list }}
+        <desc>
+{% for item in monitorix_du_folder_lists %}
+                {{ loop.index - 1}} = {{ item.desc }}
+{% endfor %}
+
+        </desc>
+        <dirmap>
+{% for item in monitorix_du_folder_lists %}
+                {{ item.dirmap }}
+{% endfor %}
+        </dirmap>
+        graphs_per_row = 2
+        rigid = 0
+        limit = 100
+</du>
+
+
+# FS graph
+# -----------------------------------------------------------------------------
+<fs>
+        <list>
+{% for item in monitorix_fs_list %}
+                {{ item.index}} = {{ item.value }}
+{% endfor %}
+        </list>
+        <desc>
+        </desc>
+        <devmap>
+        </devmap>
+        rigid = 2, 0, 2, 0
+        limit = 100, 1000, 100, 1000
+        <alerts>
+        </alerts>
+</fs>
+
+
+# ZFS graph
+# -----------------------------------------------------------------------------
+<zfs>
+        max_pools = 5
+        list = {{ monitorix_zfs_list }}
+        rigid = 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0
+        limit = 1000, 1000, 1000, 1000, 100, 1000, 1000, 1000, 100, 1000, 1000
+</zfs>
+
+
+# LMSENS graph
+# -----------------------------------------------------------------------------
+<lmsens>
+        <list>
+{% for item in monitorix_lmsens_list %}
+                {{ item.list_item}} = {{ item.list_value }}
+{% endfor %}
+        </list>
+        <desc>
+{% for item in monitorix_lmsens_list %}
+                {{ item.list_item}} = {{ item.list_desc }}
+{% endfor %}
+        </desc>
+        <alerts>
+        </alerts>
+</lmsens>
+
+
+# NUT graph
+# -----------------------------------------------------------------------------
+<nut>
+        list = {{ monitorix_nut_list }}
+        rigid = 0, 2, 0, 0, 0, 0
+        limit = 100:0, 100, 100:0, 100:0, 100:0, 100:0
+</nut>
+
+
+# NVMe graph
+# -----------------------------------------------------------------------------
+<nvme>
+        <list>
+                0 = {{ monitorix_nvme_list }}
+        </list>
+        rigid = 0, 0, 0, 0, 0, 0, 0, 0, 0
+        limit = 10, 100, 100, 100, 100, 100, 100, 100, 100
+        show_extended_plots = y
+</nvme>

@@ -8,16 +8,9 @@
 
 - name: configure monitorix
   template:
-    src: monitorix.conf.j2
-    dest: /etc/monitorix/monitorix.conf
+    src: 01-custom.conf.j2
+    dest: /etc/monitorix/conf.d/01-custom.conf
   notify: restart monitorix
-
-- name: configure monitorix
-  template:
-    src: 00-debian.conf.j2
-    dest: /etc/monitorix/conf.d/00-debian.conf
-  notify: restart monitorix
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: creating directory for alerting scripts
   file:
