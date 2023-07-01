@@ -21,34 +21,6 @@
 
 # NET graph
 # -----------------------------------------------------------------------------
-<fs>
-        <list>
-                0 = {% for item in monitorix_alerting_fs_final %}
-{{ item.list_item }}
-{%- if not loop.last %}, {% endif %}
-{% if loop.last %}
-
-{% endif %}
-{% endfor %}
-        </list>
-        <desc>
-        </desc>
-        <devmap>
-        </devmap>
-        rigid = 2, 0, 2, 0
-        limit = 100, 1000, 100, 1000
-        <alerts>
-{% for item in monitorix_alerting_fs_final %}
-{% if item.alert %}
-                {{ item.list_item }} = {{ item.time_interval }}, {{ item.threshold }}, {{ monitorix_alerting_scripts_base_path }}{{ item.script }}_{{ item.list_item_alt_name }}
-{% endif %}
-{% endfor %}
-    </alerts>
-</fs>
-
-
-# NET graph
-# -----------------------------------------------------------------------------
 <net>
         max = 10
         list = {{ monitorix_net_list }}

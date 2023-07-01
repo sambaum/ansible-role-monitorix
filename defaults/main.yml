@@ -41,7 +41,7 @@ monitorix_zfs_list: pool1, pool2
 
 monitorix_fs_list:
   - index: 0
-    value: /, /boot/efi
+    value: /, /boot/efi, swap
 
 monitorix_lmsens_list:
   - list_item: core0
@@ -97,7 +97,7 @@ monitorix_nut_list: ups@localhost
 
 monitorix_nvme_list: /dev/nvme0
 
-### Alerting
+### Alerting (currently not in template, needs fixing)
 
 monitorix_alerting_scripts_base_path: /etc/monitorix/alerting-scripts/
 
