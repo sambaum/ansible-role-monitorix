@@ -127,3 +127,24 @@
         limit = 10, 100, 100, 100, 100, 100, 100, 100, 100
         show_extended_plots = y
 </nvme>
+
+
+# Disk graph
+# -----------------------------------------------------------------------------
+<disk>
+        <list>
+                0 = {{ monitorix_disk_list }}
+        </list>
+        <desc>
+        </desc>
+        <alerts>
+        </alerts>
+</disk>
+
+
+# NFS Client graph
+# -----------------------------------------------------------------------------
+
+<nfsc>
+        version = {{ monitorix_nfs_version }}
+</nfsc>

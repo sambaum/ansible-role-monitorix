@@ -17,9 +17,13 @@ monitorix_graph_enable:
     enable: n
   - graph: zfs
     enable: n
+  - graph: disk
+    enable: n
   - graph: nvme
     enable: n
   - graph: nut
+    enable: n
+  - graph: nfsc
     enable: n
 
 monitorix_net_list: eth0 # ens160, ens192
@@ -126,3 +130,7 @@ monitorix_alerting_fs_default:
     alert: yes
 
 monitorix_alerting_fs_final: "{{ monitorix_alerting_fs_default | union(monitorix_alerting_fs) | unique }}"
+
+monitorix_disk_list: /dev/sda, /dev/sdb
+
+monitorix_nfs_version: 3
