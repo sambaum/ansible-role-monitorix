@@ -35,9 +35,11 @@ monitorix_du_folder_lists:
   - desc: "/var/spool/mail, /var/spool/mqueue, /etc, /var/ftp, /tmp"
     dirmap: 
       - "/var/spool/mail = Mail boxes"
+    type: size
   - desc: "/home/ace, /home/gene, /home/paul, /home/peter"
     dirmap: 
       - "/var/spool/mqueue = Mail queue"
+    type: files
 
 monitorix_zfs_list: pool1, pool2
 
