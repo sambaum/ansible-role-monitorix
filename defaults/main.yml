@@ -33,14 +33,17 @@ monitorix_net_gateway: eth0
 monitorix_du_list: System, Users
 monitorix_du_folder_lists:
   - desc: "/var/spool/mail, /var/spool/mqueue, /etc, /var/ftp, /tmp"
-    dirmap: "/var/spool/mail = Mail boxes"
+    dirmap: 
+      - "/var/spool/mail = Mail boxes"
   - desc: "/home/ace, /home/gene, /home/paul, /home/peter"
-    dirmap: "/var/spool/mqueue = Mail queue"
+    dirmap: 
+      - "/var/spool/mqueue = Mail queue"
 
 monitorix_zfs_list: pool1, pool2
 
 monitorix_fs_list:
   - index: 0
+    # value: /, /boot, swap
     value: /, /boot/efi, swap
 
 monitorix_lmsens_list:

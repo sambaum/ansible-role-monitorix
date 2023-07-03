@@ -45,7 +45,9 @@
         </desc>
         <dirmap>
 {% for item in monitorix_du_folder_lists %}
-                {{ item.dirmap }}
+        {% for dirmap in item.dirmap %}
+                {{ dirmap }}
+        {% endfor %}
 {% endfor %}
         </dirmap>
         graphs_per_row = 2
