@@ -2,9 +2,15 @@
   package:
     name: apt-transport-https
 
-- name: add apt signing keys
-  apt_key:
+# - name: add apt signing keys
+#   apt_key:
+#     url: https://apt.izzysoft.de/izzysoft.asc
+
+- name: Add apt repository keys.
+  ansible.builtin.get_url:
     url: https://apt.izzysoft.de/izzysoft.asc
+    dest: "/etc/apt/trusted.gpg.d/izzysoft.asc"
+    mode: '0644'
 
 - name: add apt repositories
   apt_repository:
