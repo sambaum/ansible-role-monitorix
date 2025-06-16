@@ -1,4 +1,5 @@
 ---
+- include_vars: "{{ ansible_distribution }}/{{ ansible_distribution_version }}.yml"
 
 - include_tasks: "{{ ansible_os_family }}.yml"
 
@@ -21,7 +22,7 @@
   template:
     src: "{{ item.script }}.j2"
     dest: "{{ monitorix_alerting_scripts_base_path }}{{ item.script }}_{{ item.list_item_alt_name }}"
-    mode: 0744
+    mode: '0744'
   with_items:
-    - "{{ monitorix_alerting_fs_final }}"
+  - "{{ monitorix_alerting_fs_final }}"
   when: item.alert

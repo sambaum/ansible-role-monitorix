@@ -2,23 +2,19 @@
   package:
     name: apt-transport-https
 
-# - name: add apt signing keys
-#   apt_key:
-#     url: https://apt.izzysoft.de/izzysoft.asc
-
 - name: Add apt repository keys.
   ansible.builtin.get_url:
     url: https://apt.izzysoft.de/izzysoft.asc
     dest: "/etc/apt/trusted.gpg.d/izzysoft.asc"
     mode: '0644'
 
-- name: add apt repositories
-  apt_repository:
+- name: add or remove apt repositories
+  ansible.builtin.apt_repository:
     repo: deb https://apt.izzysoft.de/ubuntu generic universe
+    state: "{{ monitorix_izzysoft_repo_state }}"
 
 - name: apt-get update
   apt:
     update_cache: yes
   when: "ansible_os_family == 'Debian'"
   changed_when: false
-
