@@ -1,7 +1,7 @@
 ---
 
 - name: restart monitorix
-  systemd:
+  ansible.builtin.systemd:
     name: monitorix.service
     state: restarted
-    daemon_reload: yes
+    daemon_reload: true

@@ -1,28 +1,32 @@
 ---
-- include_vars: "{{ ansible_distribution }}/{{ ansible_distribution_version }}.yml"
+- name: Load distribution-specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}/{{ ansible_distribution_version }}.yml"
+    - main.yml
 
-- include_tasks: "{{ ansible_os_family }}.yml"
+- ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
 
-- name: install packages
-  package:
+- name: Install packages
+  ansible.builtin.package:
     name: monitorix
 
-- name: configure monitorix
-  template:
+- name: Configure monitorix
+  ansible.builtin.template:
     src: 01-custom.conf.j2
     dest: /etc/monitorix/conf.d/01-custom.conf
   notify: restart monitorix
 
-- name: creating directory for alerting scripts
-  file:
+- name: Create directory for alerting scripts
+  ansible.builtin.file:
     path: "{{ monitorix_alerting_scripts_base_path }}"
     state: directory
+    mode: '0755'
 
-- name: deploy alerting scipts
-  template:
+- name: Deploy alerting scripts
+  ansible.builtin.template:
     src: "{{ item.script }}.j2"
     dest: "{{ monitorix_alerting_scripts_base_path }}{{ item.script }}_{{ item.list_item_alt_name }}"
     mode: '0744'
-  with_items:
-  - "{{ monitorix_alerting_fs_final }}"
+  loop: "{{ monitorix_alerting_fs_final }}"
   when: item.alert
