@@ -1,11 +1,10 @@
 ---
 - name: Load distribution-specific variables
-  ansible.builtin.include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}/{{ ansible_distribution_version }}.yml"
-    - main.yml
+  ansible.builtin.include_vars: "{{ ansible_distribution }}/{{ ansible_distribution_version }}.yml"
+  failed_when: false
 
-- ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
+- name: Include OS-family tasks
+  ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
 
 - name: Install packages
   ansible.builtin.package:
