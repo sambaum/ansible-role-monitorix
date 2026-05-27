@@ -1,6 +1,6 @@
 ---
 
-- name: restart monitorix
+- name: Restart monitorix
   ansible.builtin.systemd:
     name: monitorix.service
     state: restarted
